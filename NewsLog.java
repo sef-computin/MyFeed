@@ -14,12 +14,18 @@ public class NewsLog{
 
 	public void setHeader(String header){
 		String[] words = header.split(" ");
-		if (words.length<8)	this.header = "<html>"+header+"</html>";
+		if (words.length<8)	this.header = "<html><p align=\"center\">"+header;
 		else{
-			this.header = "<html>";
-			for (int i =0; i<8;i++)	{this.header = this.header+words[i]+" ";}
-			this.header += "<br>";
-			for (int i = 8; i<words.length;i++){this.header = this.header+words[i]+" ";}
+			this.header = "<html><p align=\"center\">";
+			int counter = 8;
+			for (int i = 0; i<words.length;i++){
+				this.header = this.header+words[i]+' ';
+				counter--;
+				if (counter==0){
+					counter = 8;
+					this.header += "<br>";
+				}
+			}
 		}
 
 	}

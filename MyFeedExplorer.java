@@ -95,6 +95,7 @@ public class MyFeedExplorer{
 
 			
 			logs[i].setOpaque(true);
+			logs[i].setHorizontalAlignment(SwingConstants.CENTER);
 			logs[i].setBackground(GRAY);
 			logs[i].setForeground(CYAN);
 			
