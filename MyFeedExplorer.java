@@ -132,11 +132,13 @@ public class MyFeedExplorer{
 		frame.setLocation(100,100);
 		frame.setSize(800,700);
 		
-		frame.setVisible(true);
-
 
 		Image logo = new ImageIcon(MyFeedExplorer.class.getResource("rss.png")).getImage();
 		frame.setIconImage(logo);
+
+
+		frame.setVisible(true);
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 	}
