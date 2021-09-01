@@ -72,14 +72,14 @@ public class MyFeedExplorer{
 		weatherPanel.setBackground(BLACK);
 		weatherPanel.setSize(780, 300);
 
-		JLabel newsHead = new JLabel("News Feed");
+		JLabel newsHead = new JLabel("Новости");
 			
 		newsHead.setForeground(WHITE);
 		newsHead.setHorizontalAlignment(SwingConstants.CENTER);
 		newsHead.setPreferredSize(new Dimension(120, 30));
 		newsHead.setVisible(true);
 
-		JLabel weatherHead = new JLabel("Moscow Weather (Night, Morning, Day, Evening)");
+		JLabel weatherHead = new JLabel("Погода Москва (Ночь, Утро, День, Вечер)");
 		weatherHead.setForeground(WHITE);
 		weatherHead.setHorizontalAlignment(SwingConstants.LEFT);
 		weatherHead.setPreferredSize(new Dimension(750,30));
@@ -152,9 +152,7 @@ public class MyFeedExplorer{
 		news = new NewsLog[5];		
 	}
 
-	//private class NewsThread implements Runnable{
-	//	newsReader = new NewsReader();
-	//}
+	
 	private class Mouse extends MouseAdapter{
 
 		private URI uri;
@@ -184,4 +182,3 @@ public class MyFeedExplorer{
 	}
 
 }
-
