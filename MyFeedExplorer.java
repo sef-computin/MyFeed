@@ -2,6 +2,7 @@ package MyFeed;
 
 import javax.swing.*;
 import java.awt.Image;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.*;
 import java.awt.Desktop;
@@ -28,22 +29,34 @@ public class MyFeedExplorer{
 	private NewsReader newsReader;
 	private WeatherReader weatherReader;
 
+	private Handler handler = new Handler();
+
 	public boolean isConnected = false;
 	
 
 	public JLabel[] logs;
 	public JLabel[] wlogs;
 	public NewsLog[] news;
+
+	private static MyFeedExplorer explorer;
+	static JFrame frame;
+
+
 	//private WeatherLog forecast;
 
 
 
 	public static void main(String args[]) 
 	{
-		MyFeedExplorer explorer = new MyFeedExplorer();
+		explorer = new MyFeedExplorer();
 		
-		Thread newsThread = new Thread(explorer.newsReader);
-		Thread weatherThread = new Thread(explorer.weatherReader);
+		explorer.startApp();
+
+	}
+
+	public void startApp(){
+		Thread newsThread = new Thread(this.newsReader);
+		Thread weatherThread = new Thread(this.weatherReader);
 		newsThread.start();
 		weatherThread.start();
 		try{
@@ -51,13 +64,12 @@ public class MyFeedExplorer{
 			weatherThread.join();
 		} catch(InterruptedException e){e.printStackTrace();} 
 
-		explorer.createAndShowGUI();
-
+		this.createAndShowGUI();
 	}
 
 
 	private void createAndShowGUI(){
-		JFrame frame = new JFrame("MyFeed");
+		frame = new JFrame("MyFeed");
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().setBackground(BLACK);
 
@@ -89,6 +101,23 @@ public class MyFeedExplorer{
 		newsPanel.add(newsHead);
 		weatherPanel.add(weatherHead);
 
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setOpaque(true);
+		buttonPanel.setBackground(BLACK);
+		buttonPanel.setSize(400, 35);
+
+		JButton restartButton = new JButton("Обновить");
+		
+		restartButton.setPreferredSize(new Dimension(200, 30));
+		restartButton.setBackground(BLACK);
+		restartButton.setForeground(CYAN);
+		restartButton.setVisible(true);
+		restartButton.setActionCommand("reset");
+        restartButton.addActionListener(handler);
+		
+        buttonPanel.add(restartButton);
+
+
 		//logs = new JLabel[5];
 		for(int i = 0; i<5;i++){
 			//logs[i] = new JLabel("...");
@@ -119,6 +148,7 @@ public class MyFeedExplorer{
 
 		newsPanel.setVisible(true);
 		weatherPanel.setVisible(true);
+		buttonPanel.setVisible(true);
 		
 
 
@@ -127,6 +157,10 @@ public class MyFeedExplorer{
 		frame.getContentPane().add(weatherPanel);
 		newsPanel.setLocation(10,10);
 		weatherPanel.setLocation(10, 355);
+		buttonPanel.setLocation(200, 620);
+
+
+		frame.getContentPane().add(buttonPanel);
 		
 		frame.pack();
 		frame.setLocation(100,100);
@@ -180,5 +214,14 @@ public class MyFeedExplorer{
         	e.getComponent().setForeground(CYAN);
     	}
 	}
-
+	private class Handler implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e){
+			String command = e.getActionCommand();
+			if (command.equals("reset")){
+				frame.dispose();
+				explorer.startApp();
+			}
+		}
+	}
 }
