@@ -29,8 +29,6 @@ public class MyFeedExplorer{
 	private NewsReader newsReader;
 	private WeatherReader weatherReader;
 
-	private Handler handler = new Handler();
-
 	public boolean isConnected = false;
 	
 
@@ -82,7 +80,7 @@ public class MyFeedExplorer{
 		JPanel weatherPanel = new JPanel();
 		weatherPanel.setOpaque(true);
 		weatherPanel.setBackground(BLACK);
-		weatherPanel.setSize(780, 300);
+		weatherPanel.setSize(780, 260);
 
 		JLabel newsHead = new JLabel("Новости");
 			
@@ -104,24 +102,21 @@ public class MyFeedExplorer{
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setOpaque(true);
 		buttonPanel.setBackground(BLACK);
-		buttonPanel.setSize(400, 35);
+		buttonPanel.setSize(400, 60);
 
-		JButton restartButton = new JButton("Обновить");
+		JLabel restartButton = new JLabel("Обновить");
+		restartButton.setOpaque(true);
+		restartButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		restartButton.setPreferredSize(new Dimension(200, 30));
-		restartButton.setBackground(BLACK);
+		restartButton.setBackground(GRAY);
 		restartButton.setForeground(CYAN);
+		restartButton.addMouseListener(new MouseBtn());
+		restartButton.setPreferredSize(new Dimension(200, 40));
 		restartButton.setVisible(true);
-		restartButton.setActionCommand("reset");
-        restartButton.addActionListener(handler);
 		
         buttonPanel.add(restartButton);
 
-
-		//logs = new JLabel[5];
 		for(int i = 0; i<5;i++){
-			//logs[i] = new JLabel("...");
-
 			
 			logs[i].setOpaque(true);
 			logs[i].setHorizontalAlignment(SwingConstants.CENTER);
@@ -155,16 +150,18 @@ public class MyFeedExplorer{
 
 		frame.getContentPane().add(newsPanel);
 		frame.getContentPane().add(weatherPanel);
+		frame.getContentPane().add(buttonPanel);
+
 		newsPanel.setLocation(10,10);
 		weatherPanel.setLocation(10, 355);
 		buttonPanel.setLocation(200, 620);
 
 
-		frame.getContentPane().add(buttonPanel);
+		
 		
 		frame.pack();
 		frame.setLocation(100,100);
-		frame.setSize(800,700);
+		frame.setSize(800,710);
 		
 
 		Image logo = new ImageIcon(MyFeedExplorer.class.getResource("rss.png")).getImage();
@@ -214,14 +211,22 @@ public class MyFeedExplorer{
         	e.getComponent().setForeground(CYAN);
     	}
 	}
-	private class Handler implements ActionListener{
+	private class MouseBtn extends MouseAdapter{
 		@Override
-		public void actionPerformed(ActionEvent e){
-			String command = e.getActionCommand();
-			if (command.equals("reset")){
-				frame.dispose();
-				explorer.startApp();
-			}
+		public void mouseClicked(MouseEvent e){
+			frame.dispose();
+			explorer.startApp();
 		}
+		@Override
+   	 	public void mouseEntered(MouseEvent e) {
+        	e.getComponent().setBackground(CYAN);
+        	e.getComponent().setForeground(BLACK);
+    	}
+    	@Override
+   	 	public void mouseExited(MouseEvent e) {
+        	e.getComponent().setBackground(GRAY);
+        	e.getComponent().setForeground(CYAN);
+    	}
 	}
+
 }
