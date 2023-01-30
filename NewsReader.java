@@ -8,8 +8,11 @@ import javax.xml.stream.events.XMLEvent;
 
 import java.net.URL;
 import java.net.MalformedURLException;
+import java.net.SocketException;
 import java.io.InputStream;
 import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
 
 import javax.swing.JLabel;
 
@@ -27,14 +30,21 @@ public class NewsReader implements Runnable{
 	private void readNews() throws MalformedURLException, IOException, XMLStreamException{
 		int count = 5;
 		boolean lookingForData = false;
-
-
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		InputStream in;
 		XMLEventReader eventReader;
-		in = url.openStream();
-		eventReader= inputFactory.createXMLEventReader(in);
-		
+	
+	try{ in = url.openStream(); }
+	catch(SocketException e){
+	 	e.printStackTrace();
+	 	in = new FileInputStream(new File("MyFeed/all.rss"));
+	}
+	 
+	//in = new FileInputStream(new File("MyFeed/all.rss"));
+
+		// System.out.println("1");
+
+		eventReader = inputFactory.createXMLEventReader(in);		
 		
 		while ((eventReader.hasNext()) && (count>0)){
 			XMLEvent event = eventReader.nextEvent();

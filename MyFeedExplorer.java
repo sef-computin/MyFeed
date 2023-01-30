@@ -205,16 +205,15 @@ public class MyFeedExplorer{
 		private URI uri;
 
 		public Mouse(String url){
-			try{
-			this.uri = new URI(url);
-		} catch(URISyntaxException error){
+		try{this.uri = new URI(url);} 
+		catch(URISyntaxException error){
 			System.out.println(error.toString());
 		}
 		}
 		@Override
 		public void mouseClicked(MouseEvent e){
-			try{Desktop.getDesktop().browse(uri);}
-			catch(IOException error){}
+		try{Desktop.getDesktop().browse(uri);}
+		catch(IOException error){}
 		}
 		@Override
    	 	public void mouseEntered(MouseEvent e) {

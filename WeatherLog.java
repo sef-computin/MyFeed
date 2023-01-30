@@ -4,7 +4,7 @@ import java.net.*;
 
 public class WeatherLog{
 
-	String[] forecast;
+	private String[] forecast;
 
 	public String[] getWeather(){
 		return forecast;
